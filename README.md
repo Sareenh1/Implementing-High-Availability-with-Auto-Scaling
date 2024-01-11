@@ -1,4 +1,4 @@
-To implement autoscaling and load balancing for the given CPU spike simulation script on AWS, you can use Amazon EC2 instances, Auto Scaling Groups, and an Application Load Balancer. Here are the steps:
+#To implement autoscaling and load balancing for the given CPU spike simulation script on AWS, you can use Amazon EC2 instances, Auto Scaling Groups, and an Application Load Balancer. #Here are the steps:
 
 Create an Amazon Machine Image (AMI):
 
