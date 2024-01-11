@@ -1,49 +1,47 @@
 # Autoscaling and Load Balancing for CPU Spike Simulation on AWS
 
-## Overview
+This guide provides step-by-step instructions for implementing autoscaling and load balancing for a CPU spike simulation script on AWS. The setup utilizes Amazon EC2 instances, Auto Scaling Groups, an Application Load Balancer, and CloudWatch alarms for monitoring. Follow these steps to deploy the solution:
 
-This guide outlines the steps to implement autoscaling and load balancing for a CPU spike simulation script on Amazon Web Services (AWS) using EC2 instances, Auto Scaling Groups, and an Application Load Balancer (ALB).
+## Step 1: Create an Amazon Machine Image (AMI)
 
-## Steps
+1. Launch an EC2 instance.
+2. Install the necessary dependencies and upload your CPU spike simulation script.
+3. Configure the instance to start your script automatically upon boot.
+4. Create an AMI from this instance.
 
-### 1. Create an Amazon Machine Image (AMI)
+## Step 2: Launch Configuration
 
-- Launch an EC2 instance.
-- Install the necessary dependencies and upload your script.
-- Configure the instance to automatically start your script upon boot.
-- Create an AMI from this instance.
+1. Go to the AWS Management Console.
+2. Navigate to EC2 -> Auto Scaling -> Launch Configurations.
+3. Create a launch configuration using the AMI created in Step 1.
 
-### 2. Launch Configuration
+## Step 3: Auto Scaling Group
 
-- Go to the AWS Management Console.
-- Navigate to **EC2 -> Auto Scaling -> Launch Configurations**.
-- Create a launch configuration using the AMI created in step 1.
+1. In the AWS Management Console, go to EC2 -> Auto Scaling -> Auto Scaling Groups.
+2. Create an Auto Scaling Group using the launch configuration from Step 2.
+3. Configure scaling policies based on CPU utilization (e.g., add instances for high CPU, remove for low CPU).
 
-### 3. Auto Scaling Group
+## Step 4: Load Balancer
 
-- In the AWS Management Console, go to **EC2 -> Auto Scaling -> Auto Scaling Groups**.
-- Create an Auto Scaling Group using the launch configuration from step 2.
-- Configure scaling policies based on CPU utilization. For example, set up a policy to add instances when CPU utilization is high and remove instances when it's low.
+1. In the AWS Management Console, go to EC2 -> Load Balancers.
+2. Create an Application Load Balancer (ALB).
+3. Configure listeners and target groups, adding instances from the Auto Scaling Group to the target group.
 
-### 4. Load Balancer
+## Step 5: Update Security Groups
 
-- In the AWS Management Console, go to **EC2 -> Load Balancers**.
-- Create an Application Load Balancer (ALB).
-- Configure listeners and target groups. Add the instances from the Auto Scaling Group to the target group.
+Ensure that your instances' security groups allow traffic from the load balancer.
 
-### 5. Update Security Groups
+## Step 6: Test the Setup
 
-- Ensure that your instances' security groups allow traffic from the load balancer.
+1. Once the Auto Scaling Group is running instances and registered with the load balancer, test by accessing the ALB's DNS name or IP.
 
-### 6. Test the Setup
+## Step 7: Monitoring with CloudWatch Alarms
 
-- Once your Auto Scaling Group is running instances and registered with the load balancer, test the setup by accessing the ALB's DNS name or IP.
+1. Set up CloudWatch alarms to monitor key metrics (e.g., CPU utilization).
+2. Define thresholds for triggering scaling actions based on alarms.
 
-### Additional Considerations
+## Note:
 
-- Ensure that your script and dependencies are configured correctly for this environment.
-- Consider monitoring and adjusting the Auto Scaling Group settings based on your specific requirements.
-
-## Note
-
-Keep in mind that this is a basic setup. Depending on your specific use case, you might need to customize the configuration, add health checks, set up alarms, and fine-tune scaling policies for optimal performance.
+- Verify that your script and dependencies are configured correctly for this environment.
+- Consider customizing the configuration, adding health checks, setting up alarms, and fine-tuning scaling policies based on specific requirements.
+- This guide provides a basic setup; additional customization may be necessary for specific use cases.
